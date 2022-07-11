@@ -16,7 +16,8 @@ exports.callback = async(client, message, args) => {
     
     let x = args.join(" ")
     if(x) {return}
-    message.reply(`⏱ | Pong **${message.author.username}**: \`${client.ws.ping} ms\``) 
+    message.reply(`⏱ | **${message.author.username}** ping: \`${client.ws.ping} ms\`
+**Bots** ping: ${Math.round(bot.ws.ping)}`) 
   } catch (error) {
     console.error(error);
   }

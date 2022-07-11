@@ -21,7 +21,7 @@ exports.callback = async(client, message, args) => {
       }
     })         
     const embed = new MessageEmbed()
-      .setAuthor(user.username,user.displayAvatarURL(true))
+      .setAuthor(message.member.username, message.member.displayAvatarURL(true))
       .setTitle(`Các command hiện có của ${message.client.user.username}`)
       .setDescription(`**Tổng số command: [${cmdSize}]**`)
       .setColor("RANDOM")

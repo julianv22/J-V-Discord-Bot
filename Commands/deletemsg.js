@@ -4,8 +4,7 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "delete"
 exports.aliases = ["del","clear"]
-exports.description = `(${cfg.OwnerEmoji} Admin only)
-Alias: \`${exports.aliases}\``
+exports.description = `(${cfg.OwnerEmoji} Admin only)\nAlias: \`${exports.aliases}\``
 exports.ussage = `**Xoá tin nhắn hàng loạt:**
 \`${cfg.prefix}${exports.name} [số tin nhắn]\` *(0 < [số tin nhắn] < 100)*
 \nKhông thể xoá tin nhắn cũ hơn 14 ngày.`

@@ -19,11 +19,11 @@ exports.callback = async(client, message, args) => {
     const imgURL = "https://cdn-longterm.mee6.xyz/plugins/welcome/images/954736697453731850/2d36f223df925d1c99ef0d477e3c8925df5a454bec3312f1ecbfd411474d9c5b.png"
     const embed = new MessageEmbed()
       .setAuthor(user.username,user.displayAvatarURL(true))
-      .setTitle("🌐 Useful links")    
+      .setTitle("Dưới dây là các liên kết bạn có thể cần")
       .setColor(cfg.embedcolor)
-      .addField("Support","[Discord Support](https://discord.gg/dyd8DXbrVq)",true)
-      .addField("Invite",`[Invite me (recommended)](${cfg.inviteLink})\n[Invite me (admin)](https://shorturl.ae/WnzIo)`,true)    
-      .addField("Owner","[Discord Owner](https://discord.gg/24GPY9CmY4)\n[YouTube](https://www.youtube.com/Julian-V)",true)
+      .addField("Server hỗ trợ", `[${cfg.serverName} Server](${cfg.discordLink})`,true)
+      .addField("Link mời",`[Invite me (recommended)](${cfg.inviteLink})\n\n[Invite me (admin)](https://shorturl.ae/WnzIo)`,true)    
+      .addField("Chủ sở hữu",`[Discord](${cfg.ownerServerLink})\n\n[YouTube](https://www.youtube.com/Julian-V)`,true)
       .setImage(imgURL)    
     message.reply({embeds: [embed]})  
   } catch (error) {

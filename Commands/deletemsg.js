@@ -26,7 +26,7 @@ exports.callback = async (client, message, args) => {
       })            
       await message.channel.send(`${cfg.successemoji} | Đã xoá ${args[0]} tin nhắn!`)
     } else {
-      return message.reply(`${cfg.erroremoji} | Bạn không phải là Admin nên không thể sử dụng command này!`)
+      return message.reply(`${cfg.erroremoji} | Bạn không phải Admin để sử dụng command này!`)
     }
   } catch (error) {
     console.error(error);

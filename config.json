@@ -1,5 +1,5 @@
-
 {
+  "token": "OTk1OTQ5NDE2MjczOTQwNjIz.GXJiaW.AkvQD-4mNgH64U2GRR8gYMLVgDkX-sURwrG1eU",
   "expresstext": "Hello Julian-V!",  
   "name": "Julian-V",
   "botID": "986945043849945088",
@@ -7,18 +7,20 @@
   "status": "~help | ⚠ Created by Julian-V ⚠",
   "statustype": "PLAYING",    
   "ModEmoji": "👮‍♂️",
+  "OwnerEmoji": "🦸‍♂️",
   "erroremoji": "❌",
-  "OwnerEmoji": "🦸‍♂️",  
-  "successemoji": "✅",  
-  "utiemoji": "⚙",
+  "successemoji": "✅",
+  "noneemoji": "🚫 | Nothing here!",  
   "FunEmoji": "🤣",
   "SayEmoji": "🗣️",
   "CurrencyEmoji": "💸",
   "CurrencyName": "Dollars",
-  "serverName": "Julian-V [Master Duel VN]",
+  "serverName": "🎭〔J-V Bot〕 SUPPORT",
+  "serverID": "989460806590660629",
   "ownerID": "566891661616218132",
-  "serverID": "954736697453731850",
+  "ownerServerID": "954736697453731850",  
   "embedcolor": "RANDOM",
-  "InviteLink": "https://shorturl.ae/v5lnk",
-  "thumbnailURL":"https://images-ext-2.discordapp.net/external/Lse9PTukxV2WXYVCd97mtae3NOUCye9DnXawzWW5l9A/https/cdn-longterm.mee6.xyz/plugins/reaction_roles/images/954736697453731850/d543458c7c87e53c6eadcccca7d31a625496c791a1d803c522a9c3be9893de3f.png?width=676&height=676"
+  "inviteLink": "https://shorturl.ae/v5lnk",  
+  "thumbnailURL":"https://cdn-longterm.mee6.xyz/plugins/reaction_roles/images/954736697453731850/d543458c7c87e53c6eadcccca7d31a625496c791a1d803c522a9c3be9893de3f.png",
+  "helpPNG": "https://www.pngall.com/wp-content/uploads/5/Help.png"
 }

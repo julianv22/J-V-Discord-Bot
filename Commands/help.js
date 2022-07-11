@@ -21,9 +21,10 @@ exports.callback = async(client, message, args) => {
       }
     })         
     const embed = new MessageEmbed()
-      .setAuthor(message.member.username, message.member.displayAvatarURL(true))
-      .setTitle(`Các command hiện có của ${message.client.user.username}`)
-      .setDescription(`**Tổng số command: [${cmdSize}]**`)
+      .setAuthor(`Xin chào ${user.username}!`, user.displayAvatarURL(true))
+      .setTitle('Dưới đây là một số command bạn có thể sử dụng')
+      .setDescription(`Nếu bạn cần hỗ trợ, hãy tham gia máy chủ hỗ trợ: [\`🎭〔J-V Bot〕 SUPPORT\`](https://discord.gg/dyd8DXbrVq)\n
+**Tổng số command: [${cmdSize}]**`)
       .setColor("RANDOM")
       .setThumbnail(cfg.helpPNG)         
       .addFields(cmds)      

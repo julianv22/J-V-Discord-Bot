@@ -15,11 +15,12 @@ exports.ussage = `\`${cfg.prefix}${exports.name} nội dung đề xuất\`
 exports.callback = async (client, message, args) => {
   try {
     const sgtSet = args.join(' ').split(' ')
-    const sgtChannel = await db.get(`sgtChannel_${message.guild.id}`)
+    let sgtChannel = await db.get(`sgtChannel_${message.guild.id}`)
+    let rpChannel = client.channels.cache.get(sgtChannel)
     //console.log(`Suggset Channel: ${sgtChannel}`)        
     if (sgtSet[0] === '?') {
       return message.reply({
-        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
+        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage + `\n\nChannel gửi đề xuất: ${rpChannel}`))
       })
     }
 
@@ -35,20 +36,23 @@ exports.callback = async (client, message, args) => {
       return
     }
     if (!sgtChannel) return message.reply(`${cfg.erroremoji} | Chưa setup channel gửi đề xuất. Hãy liên hệ với ban quản trị để được hỗ trợ và hướng dẫn!`)
-    //Check Suggest Content
-    if (!args.join(' ')) return message.reply(`${cfg.erroremoji} | Nội dung đề xuất không thể bỏ trống!
-\`${cfg.prefix}${exports.name} <nội dung đề xuất>\``)
 
-    if (sgtSet[0] === 'ok') { //Suggest Accept
-      message.delete();
-      message.channel.send(`\`${cfg.successemoji} | Đề xuất đã được chấp nhận!\``);
-      return;
-    } else if (sgtSet[0] === 'deny') { //Suggest Deny
-      message.delete();
-      message.channel.send(`\`🚫 | Đề xuất không được chấp nhận!\``);
-      return;
-    } else {
-      //Create Embed Message
+    if (message.member.permissions.has("ADMINISTRATOR")) {
+      if (sgtSet[0] === 'ok') { //Suggest Accept
+          message.delete();
+          rpChannel.send(`\`${cfg.successemoji} | Đề xuất đã được chấp nhận!\``);
+          return;
+      } else if (sgtSet[0] === 'deny') { //Suggest Deny
+          message.delete();
+          rpChannel.send(`\`🚫 | Đề xuất không được chấp nhận!\``);
+          return;
+      }
+    }
+    //Check Suggest Content
+    if (!args.join(' ')) {
+      return message.reply(`${cfg.erroremoji} | Nội dung đề xuất không thể bỏ trống!
+\`${cfg.prefix}${exports.name} <nội dung đề xuất>\``)
+    } else { //Create Embed Message
       const user = message.author
       const em = new MessageEmbed()
         .setAuthor({ name: `Đề xuất của ${user.tag}`, iconURL: user.displayAvatarURL(true) })
@@ -56,12 +60,12 @@ exports.callback = async (client, message, args) => {
         .setDescription("Đề xuất sẽ được xem xét và trả lời sớm nhất!")
         .addField('Nội dung:', args.join(' '))
         .setTimestamp()
-        .setColor("RED")
+        .setColor("RANDOM")
         .setThumbnail(thumbnailURL)
         .setFooter(message.guild.name, message.guild.iconURL(true))
       message.delete()
       //Report Channel
-      const rpChannel = client.channels.cache.get(sgtChannel)
+      rpChannel = client.channels.cache.get(sgtChannel)
       const msgSuggest = await rpChannel.send({ embeds: [em] })
       msgSuggest.react("👍")
       msgSuggest.react("👎")

@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = require("../Functions/getQuote")
+const funcQ = require("../Functions/getQuote")
+const funcH = require("../Functions/cmdHelp")
 
 exports.name = "quote"
 exports.aliases = ["qt"]
@@ -11,20 +12,11 @@ exports.callback = async(client, message, args) => {
   try { 
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: [{
-          author: {
-            name: message.author.username,
-            icon_url: message.author.displayAvatarURL(true)
-          },
-          thumbnail: {url: cfg.helpPNG},
-          title: `Huớng dẫn sử dụng command [${exports.name}]`,
-          description: exports.ussage,          
-          color: 'RANDOM',          
-        }]
+        embeds: (funcH.cmdHelp(client, message, exports.name, exports.ussage))
       })
     }
     
-    func.getQuote().then(quote => {
+    funcQ.getQuote().then(quote => {
       const user = message.author
       const embed = new MessageEmbed()      
         .setAuthor(user.username, user.displayAvatarURL(true))

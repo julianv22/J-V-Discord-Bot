@@ -1,4 +1,5 @@
 const cfg = require('../config.json')
+const func = require("../Functions/cmdHelp")
 
 exports.name = "say"
 //exports.aliases = ["s"]
@@ -9,16 +10,7 @@ exports.callback = async(client, message, args) => {
   try {
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: [{
-          author: {
-            name: message.author.username,
-            icon_url: message.author.displayAvatarURL(true)
-          },
-          thumbnail: {url: cfg.helpPNG},
-          title: `Huớng dẫn sử dụng command [${exports.name}]`,
-          description: exports.ussage,          
-          color: 'RANDOM',          
-        }]
+        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
       })
     }
     

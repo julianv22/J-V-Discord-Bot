@@ -1,9 +1,11 @@
 const cfg = require('../config.json')
+const func = require("../Functions/cmdHelp")
 const devs = [
 	"816253376962625537", // @GoodBoyNeon
 	"820502577783373884", // @Nandhu
 	"459342334564237323", // @Daysling
 ];
+
 exports.name = "hack"
 //exports.aliases = [""]
 exports.description = `Hack ai đó - J4F 😝`
@@ -13,16 +15,7 @@ exports.callback = async(client, message, args) => {
   try {
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: [{
-          author: {
-            name: message.author.username,
-            icon_url: message.author.displayAvatarURL(true)
-          },
-          thumbnail: {url: cfg.helpPNG},
-          title: `Huớng dẫn sử dụng command [${exports.name}]`,
-          description: exports.ussage,          
-          color: 'RANDOM',          
-        }]
+        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
       })
     }
     

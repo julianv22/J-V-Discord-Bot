@@ -2,6 +2,7 @@ const Database = require("@replit/database")
 const db = new Database()
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
+const func = require("../Functions/cmdHelp")
 const thumbnailURL = "https://media.discordapp.net/attachments/976364997066231828/995628740782596127/unknown.png"
 
 exports.name = "suggest"
@@ -18,16 +19,7 @@ exports.callback = async (client, message, args) => {
     //console.log(`Suggset Channel: ${sgtChannel}`)        
     if (sgtSet[0] === '?') {
       return message.reply({
-        embeds: [{
-          author: {
-            name: message.author.username,
-            icon_url: message.author.displayAvatarURL(true)
-          },
-          thumbnail: {url: cfg.helpPNG},
-          title: `Huớng dẫn sử dụng command [${exports.name}]`,
-          description: exports.ussage,          
-          color: 'RANDOM',          
-        }]
+        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
       })
     }
 

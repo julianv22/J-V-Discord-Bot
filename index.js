@@ -58,13 +58,12 @@ client.on("messageCreate", async (message) => {
 client.on("ready", () => {
   console.log("Client has Logged on!");
   client.user.setActivity(`${cfg.status}`, { type: `${cfg.statustype}` });
-  console.log(`${client.user.username} bot is online. Prefix = ${cfg.prefix}`);
+  console.log(`${cfg.name} bot is online. Prefix = ${cfg.prefix}`);
   console.log(`Working in ${client.guilds.cache.size.toLocaleString()} Servers`)
-  console.log(`Status = ${cfg.status}`);
+  console.log(`Status = ${cfg.prefix}${cfg.status}`);
   console.log(`Status type = ${cfg.statustype}`);
   console.log(`Mod emoji = ${cfg.ModEmoji}`);
-  console.log(`Owner emoji = ${cfg.OwnerEmoji}`);
-  console.log(`Uti Emoji = ${cfg.utiemoji}`);
+  console.log(`Owner emoji = ${cfg.OwnerEmoji}`);  
   console.log(`Error Emoji = ${cfg.erroremoji}`);
   console.log(`Success Emoji = ${cfg.successemoji}`);
   console.log(`Fun Emoji = ${cfg.FunEmoji}`);

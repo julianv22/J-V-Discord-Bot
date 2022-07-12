@@ -1,6 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
 const func = require("../Functions/checkURL")
+const funcE = require("../Functions/cmdError")
 
 exports.name = "embed"
 exports.aliases = ["em"]
@@ -27,12 +28,9 @@ exports.callback = async (client, message, args) => {
     let emContent = args.join(" ").split("|")
     if (emContent[0] === '?') return message.reply({embeds: [emHelp]})    
     
-    const emErr = new MessageEmbed()
-      .setTitle(`${cfg.erroremoji} | Câu lệnh chưa chính xác!`)
-      .setDescription(`\`${cfg.prefix}${exports.name} Tiêu đề | Nội dung\``)
-      .setColor("RED")
-    
-    if (!emContent[0] || !emContent[1]) return message.reply({ embeds: [emErr] })
+    if (!emContent[0] || !emContent[1]) return message.reply({
+      embeds: (funcE.cmdError(message, `Command chưa chính xác!\n\`${cfg.prefix}${exports.name} ?\` để xem hướng dẫn cụ thể`))
+    })
     const embed = new MessageEmbed()
       .setAuthor(user.username, user.displayAvatarURL(true))
       .setTitle(emContent[0])

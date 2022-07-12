@@ -12,7 +12,7 @@ exports.callback = async(client, message, args) => {
   try { 
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: (funcH.cmdHelp(client, message, exports.name, exports.ussage))
+        embeds: (funcH.cmdHelp(message, exports.name, exports.ussage))
       })
     }
     

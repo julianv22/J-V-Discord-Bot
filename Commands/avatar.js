@@ -2,6 +2,7 @@ const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
 const func = require("../Functions/cmdHelp")
 
+
 exports.name = "avatar"
 exports.aliases = ["avt"]
 exports.description = `⤷Xem avatar của một người nào đó.\nAlias: \`${exports.aliases}\``
@@ -13,7 +14,7 @@ exports.callback = async(client, message, args) => {
   try {   
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
+        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
       })
     }
     

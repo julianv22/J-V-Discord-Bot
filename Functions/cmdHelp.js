@@ -1,6 +1,6 @@
 const cfg = require('../config.json')
 
-function cmdHelp(client, message, stname, stussage) {  
+function cmdHelp(message, stname, stussage) {  
   try {    
     let res = [{
         author: {

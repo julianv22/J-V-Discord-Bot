@@ -21,7 +21,7 @@ exports.callback = async (client, message, args) => {
     //console.log(`Suggset Channel: ${sgtChannel}`)        
     if (sgtSet[0] === '?') {
       return message.reply({
-        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage + `\n\nChannel gửi đề xuất: ${rpChannel}`))
+        embeds: (func.cmdHelp(message, exports.name, exports.ussage + `\n\nChannel gửi đề xuất: ${rpChannel}`))
       })
     }
 

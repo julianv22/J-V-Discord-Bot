@@ -3,52 +3,67 @@ const db = new Database()
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
 const func = require("../Functions/cmdHelp")
+const thumbnailURL = "https://blognhansu.net.vn/wp-content/uploads/2017/01/update-tai-lieu.jpg"
 
-exports.name = "thanks"
-exports.aliases = ["ty"]
-exports.description = `⤷Gửi lời cảm ơn.\nAlias: \`${exports.aliases}\``
-exports.ussage = `Gửi lời cảm ơn tới ai đó: \n\`${cfg.prefix}${exports.name} @tên thành viên\``
+exports.name = "update"
+exports.aliases = ["up"]
+exports.description = `⤷${cfg.OwnerEmoji} only\nAlias: \`${exports.aliases}\``
+exports.ussage = `**${cfg.OwnerEmoji} only**\n
+**Gửi thông báo lên channel thông báo:**
+\`${cfg.prefix}${exports.name} Tiêu đề | Nội dung thông báo\`\n
+**Set channel thông báo:**
+\`${cfg.prefix}${exports.name} set [ID channel]\``
 
-exports.callback = async(client, message, args) => {
+exports.callback = async (client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') {
+    const stArgs = args.join(' ').split(' ')
+    let updateChannel = await db.get(`updateChannel_${message.guild.id}`)
+    let rpChannel = client.channels.cache.get(updateChannel)
+    
+    if (stArgs[0] === '?') {
       return message.reply({
-        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
+        embeds: (func.cmdHelp(message, exports.name, exports.ussage + `\n\nChannel gửi thông báo: ${rpChannel}`))
       })
     }
+
+    if (!message.member.permissions.has("ADMINISTRATOR")) {
+      return message.reply(`${cfg.erroremoji} | Bạn không phải Admin để sử dụng command này!`) 
+      } else {
+        if (stArgs[0] === 'set') { //Set Channel         
+          const setChannel = client.channels.cache.get(stArgs[1] || message.channel.id)
+          if (setChannel === undefined) { //Check Channel ID
+            message.reply(`${cfg.erroremoji} | ID channel không đúng hoặc chưa chính xác`)
+          } else {
+            await db.set(`updateChannel_${message.guild.id}`, stArgs[1] || message.channel.id) //Set Channel ID
+            message.reply(`${cfg.successemoji} | Channel thông báo đã được đặt thành ${setChannel}`)
+          }
+          return
+      }
+    }
     
-    let imgURL = ["https://cdn.discordapp.com/attachments/976364997066231828/987822146279587850/unknown.png",
-      "https://media.discordapp.net/attachments/976364997066231828/988317420106174484/unknown.png",
-      "https://cdn.discordapp.com/attachments/976364997066231828/988317854610907136/unknown.png",
-      "https://cdn.discordapp.com/attachments/976364997066231828/988318049616670740/unknown.png",
-      "https://media.discordapp.net/attachments/976364997066231828/988318184018960464/unknown.png",
-      "https://cdn.discordapp.com/attachments/976364997066231828/988318415037005904/unknown.png",
-      "https://cdn.discordapp.com/attachments/976364997066231828/988318803664445530/unknown.png",
-  "https://png.pngtree.com/thumb_back/fw800/background/20201020/pngtree-rose-thank-you-background-image_425104.jpg",
-  "https://www.ketoan.vn/wp-content/uploads/2020/12/thank.jpg",
-  "https://img.freepik.com/free-vector/thank-you-neon-sign-design-template-neon-sign_77399-331.jpg",
-  "https://i.pinimg.com/originals/7b/d9/46/7bd946c65b8aa3654236e6f5cb7fa0fd.gif",   "https://2.bp.blogspot.com/-83klB_SGIfA/VpyvOosaHyI/AAAAAAAASJI/ol3l6ADeLc0/s1600/Hinh-anh-cam-on-thank-you-dep-nhat-Ohaylam.com-%25283%2529.jpg"]
+    if (!updateChannel) return message.reply(`${cfg.erroremoji} | Chưa set channel thông báo!`)
     
-    let user = message.author
-    let member = message.mentions.members.first()    
-    if(!member) {
-      return message.reply(`${cfg.erroremoji} | Bạn phải @ một ai đó!`)}
-    if (member.user.bot) {
-      return message.reply(`${cfg.erroremoji} | Bot không cần cảm ơn 😝!`)}
-    if (member.id === message.author.id) {
-      return message.reply(`${cfg.erroremoji} | Bạn không thể cảm ơn chính mình 😅!`)} 
-    
-    const thanksCount = await db.get(`thanksCount_${message.guild.id}_${member.id}`) || 1    
-    const embed = new MessageEmbed()
-      .setAuthor(user.username,user.displayAvatarURL(true))
-      .setTitle("💖 | Special thanks!")
-      .setDescription(`${user} đã gửi lời cảm ơn tới ${member}!\n\nThanks count: ${thanksCount.toString()}`)
-      .setFooter(`Sử dụng ${cfg.prefix}${exports.name} để cảm ơn người khác`, message.guild.iconURL(true))
-      .setTimestamp()
-      .setColor(cfg.embedcolor)
-      .setImage(`${imgURL[Math.floor(Math.random() * imgURL.length)]}`)                
-    message.reply({embeds: [embed]})    
-    await db.set(`thanksCount_${message.guild.id}_${member.id}`, thanksCount + 1)
+    //Check Suggest Content
+    const emArgs = args.join(' ').split('|')
+    if (!emArgs[0] || !emArgs[1]) {
+      return message.reply(`${cfg.erroremoji} | Nội dung thông báo không thể bỏ trống!
+\`${cfg.prefix}${exports.name} Tiêu đề | Nội dung\``)
+    } else { //Create Embed Message
+      const user = message.author
+      const em = new MessageEmbed()
+        .setAuthor({ name: message.guild.name, iconURL: message.guild.iconURL(true) })
+        .setTitle(emArgs[0])
+        .setDescription(emArgs[1])        
+        .setTimestamp()
+        .setColor("RED")
+        .setThumbnail(thumbnailURL)
+        .setFooter(`Send by ${emArgs[2] || user.username}`, user.displayAvatarURL(true))
+      message.delete()
+      //Report Channel
+      rpChannel = client.channels.cache.get(updateChannel)
+      rpChannel.send({ embeds: [em] })      
+      //console.log(`${cfg.successemoji} | Thông báo đã được gửi thành công!`)
+    }
   } catch (error) {
     console.error(error);
   }

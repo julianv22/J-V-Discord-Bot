@@ -5,7 +5,7 @@
   "prefix": "~",  
   "status": "help | ⚠ Created by Julian-V ⚠",
   "statustype": "PLAYING",    
-  "ModEmoji": "👮‍♂️",
+  "ModEmoji": "〔Ⓜ️od〕",
   "OwnerEmoji": "〔🅰min〕",
   "erroremoji": "❌",
   "successemoji": "✅",
@@ -23,5 +23,6 @@
   "inviteLink": "https://shorturl.ae/v5lnk",
   "discordLink": "https://discord.gg/dyd8DXbrVq",
   "thumbnailURL":"https://cdn-longterm.mee6.xyz/plugins/reaction_roles/images/954736697453731850/d543458c7c87e53c6eadcccca7d31a625496c791a1d803c522a9c3be9893de3f.png",
-  "helpPNG": "https://www.pngall.com/wp-content/uploads/5/Help.png"
+  "helpPNG": "https://www.pngall.com/wp-content/uploads/5/Help.png",
+  "errorPNG": "https://png2.cleanpng.com/sh/0f8e00c86f2f1f1797d0086459ccec90/L0KzQYi4UsAzN2FmSpGAYUK1RIbphMc1PpYASpC9MUS2QoK7WME2OWM2UacAMUe3R4eCTwBvbz==/5a2245bd746e92.4143214815121955174769.png"
 }

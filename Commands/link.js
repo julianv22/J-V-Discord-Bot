@@ -4,8 +4,8 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "link"
 exports.aliases = ["invite"]
-exports.description = `Link 🔞\nAlias: \`${exports.aliases}\``
-exports.ussage = `\`${cfg.noneemoji}\``
+exports.description = `⤷Link 🔞\nAlias: \`${exports.aliases}\``
+exports.ussage = `\`${cfg.prefix}${exports.name}\``
 
 exports.callback = async(client, message, args) => {
   try {

@@ -3,12 +3,12 @@ const moment = require("moment")
 const cfg = require('../config.json')
 const func = require("../Functions/cmdHelp")
 
-exports.name = "serverinfo"
-exports.aliases = ["info", "inf"]
-exports.description = `Xem thông tin server (hoặc thành viên nếu @).
+exports.name = "info"
+exports.aliases = ["serverinfo", "inf"]
+exports.description = `⤷Xem thông tin server/ thành viên.
 Alias: \`${exports.aliases}\``
 exports.ussage = `**Xem thông tin server:**
-\`${cfg.prefix}${exports.name}\`
+\`${cfg.prefix}${exports.aliases[0]}\`
 \n**Xem thông tin của thành viên:**
 \`${cfg.prefix}${exports.name} @tên thành viên\``
 

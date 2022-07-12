@@ -8,7 +8,7 @@ const devs = [
 
 exports.name = "hack"
 //exports.aliases = [""]
-exports.description = `Hack ai đó - J4F 😝`
+exports.description = `⤷Hack ai đó - J4F 😝`
 exports.ussage = `J4F 😝 \n\`${cfg.prefix}${exports.name} @tên thành viên\``
 
 exports.callback = async(client, message, args) => {

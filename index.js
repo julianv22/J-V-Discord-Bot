@@ -58,7 +58,7 @@ client.on("messageCreate", async (message) => {
 client.on("ready", () => {
   console.log("Client has Logged on!");
   client.user.setActivity(`${cfg.status}`, { type: `${cfg.statustype}` });
-  console.log(`${cfg.name} bot is online. Prefix = ${cfg.prefix}`);
+  console.log(`${cfg.name} is online. Prefix = ${cfg.prefix}`);
   console.log(`Working in ${client.guilds.cache.size.toLocaleString()} Servers`)
   console.log(`Status = ${cfg.prefix}${cfg.status}`);
   console.log(`Status type = ${cfg.statustype}`);

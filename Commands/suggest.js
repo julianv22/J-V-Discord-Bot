@@ -7,10 +7,11 @@ const thumbnailURL = "https://media.discordapp.net/attachments/97636499706623182
 
 exports.name = "suggest"
 exports.aliases = ["sgt"]
-exports.description = `Đề xuất ý kiến.\nAlias: \`${exports.aliases}\``
-exports.ussage = `\`${cfg.prefix}${exports.name} nội dung đề xuất\`
-\n**Admin only:**
-\`${cfg.prefix}${exports.name} set [ID channel]\` để set channel gửi đề xuất`
+exports.description = `⤷Đề xuất ý kiến.\nAlias: \`${exports.aliases}\``
+exports.ussage = `**Để gửi đề xuất sử dụng command:**
+\`${cfg.prefix}${exports.name} nội dung đề xuất\`
+\n**Set channel gửi đề xuất** (${cfg.OwnerEmoji} only ):
+\`${cfg.prefix}${exports.name} set [ID channel]\``
 
 exports.callback = async (client, message, args) => {
   try {

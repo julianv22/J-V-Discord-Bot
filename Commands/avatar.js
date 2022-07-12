@@ -4,8 +4,10 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "avatar"
 exports.aliases = ["avt"]
-exports.description = `Xem avatar của một người nào đó.\nAlias: \`${exports.aliases}\``
-exports.ussage = `Xem avatar của một người nào đó: \n\`${cfg.prefix}${exports.name} @tên thành viên\``
+exports.description = `⤷Xem avatar của một người nào đó.\nAlias: \`${exports.aliases}\``
+exports.ussage = `**Để xem avatar của một người nào đó dùng command:**
+\`${cfg.prefix}${exports.name} @tên thành viên\`
+*(nếu bỏ trống phần tên thì sẽ hiển thị avatar của chính mình)*`
 
 exports.callback = async(client, message, args) => {
   try {   

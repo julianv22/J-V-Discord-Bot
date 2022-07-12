@@ -3,8 +3,8 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "ping"
 //exports.aliases = [""]
-exports.description = "Ping Pong!"
-exports.ussage = `\`${cfg.noneemoji}\``
+exports.description = "⤷Ping Pong!"
+exports.ussage = `\`${cfg.prefix}${exports.name}\``
 
 exports.callback = async(client, message, args) => {
   try {

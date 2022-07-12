@@ -1,14 +1,19 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
+const func = require("../Functions/cmdHelp")
 
 exports.name = "help"
 exports.aliases = ["h"]
-exports.description = "Đọc kỹ hướng dẫn SD trước khi dùng!"
-exports.ussage = `\`Đọc kỹ hướng dẫn SD trước khi dùng!\``
+exports.description = "⤷\`Đọc kỹ hướng dẫn SD trước khi dùng!\`"
+exports.ussage = `Sử dụng \`${cfg.prefix}${exports.name}\` để xem danh sách các command.\n
+\`${cfg.prefix}[tên command] ?\` để xem hướng dẫn chi tiết của command đó.\n
+${exports.description}`
                     
 exports.callback = async(client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') return message.reply(exports.ussage)
+    if (args.join(' ').trim() === '?') return message.reply({
+        embeds: (func.cmdHelp(client, message, exports.name, exports.ussage))
+      })
     
     const user = message.author
     const cmdSize = client.commands.size 
@@ -29,7 +34,7 @@ exports.callback = async(client, message, args) => {
       .setThumbnail(cfg.helpPNG)         
       .addFields(cmds)      
       .addField(`Command prefix: ${cfg.prefix}`, `${joinCmd}`)
-      .setFooter(`${cfg.prefix}command ? để xem hướng dẫn cụ thể.`, message.guild.iconURL(true))
+      .setFooter(`${cfg.prefix}[tên command] ? để xem hướng dẫn chi tiết của command.`, message.guild.iconURL(true))
     message.channel.send({embeds: [embed]})
     message.delete()
   } catch (error) {

@@ -3,8 +3,8 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "react"
 //exports.aliases = [""]
-exports.description = "Cool! 😎"
-exports.ussage = `\`${cfg.noneemoji}\``
+exports.description = "⤷Cool! 😎"
+exports.ussage = `\`${cfg.prefix}${exports.name}\``
 
 exports.callback = async (client, message, args) => {  
   try {

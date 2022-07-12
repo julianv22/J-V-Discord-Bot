@@ -5,7 +5,7 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "whois"
 //exports.aliases = [""]
-exports.description = `Xem thông tin thành viên (vi).`
+exports.description = `⤷Xem thông tin thành viên (vi).`
 exports.ussage = `Xem thông tin của thành viên (vi): \n\`${cfg.prefix}${exports.name} @tên thành viên\``
 
 exports.callback = (client, message, args) => {

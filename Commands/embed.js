@@ -4,7 +4,7 @@ const func = require("../Functions/checkURL")
 
 exports.name = "embed"
 exports.aliases = ["em"]
-exports.description = `Tạo embed message.\nAlias: \`${exports.aliases}\`` 
+exports.description = `⤷Tạo embed message.\nAlias: \`${exports.aliases}\`` 
 
 exports.callback = async (client, message, args) => {
   try {
@@ -15,8 +15,8 @@ exports.callback = async (client, message, args) => {
       .setThumbnail('https://www.pngall.com/wp-content/uploads/5/Help.png')
       .setAuthor(user.username, user.displayAvatarURL(true))      
       .addFields(
-        {name: 'Cơ bản', value: `\`${cfg.prefix}${exports.name} Title | Description\``},
-        {name: 'Nâng cao', value: `\`${cfg.prefix}${exports.name} Title | Description | Footer | ImageURL | ThumbnailURL \``},
+        {name: 'Tạo embed cơ bản', value: `\`${cfg.prefix}${exports.name} Title | Description\``},
+        {name: 'Tạo embed nâng cao', value: `\`${cfg.prefix}${exports.name} Title | Description | Footer | ImageURL | ThumbnailURL \``},
         {name: 'Title' , value: 'Tiêu đề', inline: true},
         {name: 'Description' , value: 'Nội dung', inline: true},
         {name: 'Footer' , value: 'Phần cuối embed', inline: true},

@@ -6,7 +6,7 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "thanks"
 exports.aliases = ["ty"]
-exports.description = `Gửi lời cảm ơn.\nAlias: \`${exports.aliases}\``
+exports.description = `⤷Gửi lời cảm ơn.\nAlias: \`${exports.aliases}\``
 exports.ussage = `Gửi lời cảm ơn tới ai đó: \n\`${cfg.prefix}${exports.name} @tên thành viên\``
 
 exports.callback = async(client, message, args) => {

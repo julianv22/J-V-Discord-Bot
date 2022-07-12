@@ -4,8 +4,9 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "kiss"
 //exports.aliases = [""]
-exports.description = "👄"
-exports.ussage = `\`${cfg.noneemoji}\``
+exports.description = "⤷👄"
+exports.ussage = `**Trao hụ hôn thắm thiết cho người bạn thương 😘**
+\`${cfg.prefix}${exports.name} @tên thành viên\``
 
 exports.callback = async(client, message, args) => {
   try {

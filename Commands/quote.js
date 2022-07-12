@@ -5,8 +5,8 @@ const funcH = require("../Functions/cmdHelp")
 
 exports.name = "quote"
 exports.aliases = ["qt"]
-exports.description = `Trích dẫn 1 câu trên [zenquotes](https://zenquotes.io)\nAlias: \`${exports.aliases}\``
-exports.ussage = `\`${cfg.noneemoji}\``
+exports.description = `⤷Trích dẫn 1 câu trên [zenquotes](https://zenquotes.io)\nAlias: \`${exports.aliases}\``
+exports.ussage = `\`${cfg.prefix}${exports.name}\``
 
 exports.callback = async(client, message, args) => {
   try { 

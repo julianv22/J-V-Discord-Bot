@@ -3,7 +3,7 @@ const func = require("../Functions/cmdHelp")
 
 exports.name = "say"
 //exports.aliases = ["s"]
-exports.description = cfg.SayEmoji
+exports.description = `⤷${cfg.SayEmoji}`
 exports.ussage = `Nói gì đó: \`${cfg.prefix}${exports.name} <nội dung>\``
 
 exports.callback = async(client, message, args) => {

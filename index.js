@@ -1,6 +1,7 @@
 const expr = require("express");
 const DC = require("discord.js");
 const cfg = require('./config.json')
+const func = require("./Functions/cmdError")
 const app = expr();
 
 app.listen(3000, () => {
@@ -46,7 +47,9 @@ client.on("messageCreate", async (message) => {
       const command = client.commands.get(cmdName) || client.commands.find(a => a.aliases && a.aliases.includes(cmdName));
       // Check command
       if (!command) {
-        return message.reply(`Câu lệnh **${cmdName}** chưa chính xác hoặc không tồn tại!`)
+        return message.reply({
+          embeds: (func.cmdError(message, `Command \`${cfg.prefix}${cmdName}\` chưa chính xác hoặc không tồn tại!`))
+        })
       }
       command.callback(client, message, args);
     }

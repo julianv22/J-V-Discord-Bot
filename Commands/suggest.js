@@ -6,6 +6,15 @@ const func = require("../Functions/cmdHelp")
 const funcE = require("../Functions/cmdError")
 const thumbnailURL = "https://media.discordapp.net/attachments/976364997066231828/995628740782596127/unknown.png"
 
+async function replySuggest(message, msgID, stReply) {    
+  let msg = await message.channel.messages.fetch(msgID).catch(() => undefined);
+  if (msg === undefined) return message.reply({
+      embeds: (funcE.cmdError(message,'Lỗi Message ID', 'Message ID không chính xác!'))
+    })
+  if (msg.author.id != cfg.botID) return message.reply(`${cfg.erroremoji} | Hình như sai ID rồi đó man!`)
+  return await msg.edit(stReply).then(() => message.delete())
+}
+
 exports.name = "suggest"
 exports.aliases = ["sgt"]
 exports.description = `⤷Đề xuất ý kiến.\nAlias: \`${exports.aliases}\``
@@ -21,13 +30,19 @@ exports.callback = async (client, message, args) => {
       .setTitle(`Hướng dẫn sử dụng [${exports.name}]`)
       .setColor('RANDOM')
       .setThumbnail('https://www.pngall.com/wp-content/uploads/5/Help.png')
-      .setAuthor(message.guild.name, message.guild.iconURL(true))      
+      .setAuthor(message.guild.name, message.guild.iconURL(true))
+      .setImage('https://media.discordapp.net/attachments/995993830367182858/997052005971410984/unknown.png')
       .addFields(
-        {name: 'Gửi đề xuất', value: `\`${cfg.prefix}${exports.name} nội dung đề xuất\``},
-        {name: `${cfg.OwnerEmoji} only:`, value: `Channel gửi đề xuất ${rpChannel}`},
-        {name: 'Set channel gửi đề xuất' , value: `\`${cfg.prefix}${exports.name} set [ID channel]\``, inline: true},
-        {name: 'Chấp nhận đề xuất' , value: `\`${cfg.prefix}${exports.name} ok\``, inline: true},
-        {name: 'Từ chối đề xuất' , value: `\`${cfg.prefix}${exports.name} deny\``, inline: true},
+        {name: 'Gửi đề xuất', value: `\`${cfg.prefix}${exports.name} nội dung đề xuất\`
+\nChannel gửi đề xuất: ${rpChannel}`},
+        {name: `${cfg.OwnerEmoji} only:`, value: '*(dành cho quản trị viên)*'},
+        {name: 'Set channel gửi đề xuất' , value: `\`${cfg.prefix}${exports.name} set [ChannelID]\``, inline: true},
+        {name: 'Chấp nhận đề xuất' , value: `\`${cfg.prefix}${exports.name} ok [MessageID]\``, inline: true},
+        {name: 'Từ chối đề xuất' , value: `\`${cfg.prefix}${exports.name} deny [MessageID]\``, inline: true},
+        {name: 'Tham số:' , value: `**ChannelID** là ID của channel sẽ gửi đề xuất. Lấy ID bằng cách click chuột phải vào channel => chọn \`Sao chép ID\`\n
+**MessageID** là ID của tin nhắn
+\`❗ | Đề xuất sẽ được xem xét và trả lời sớm nhất!\`
+ở bên dưới đề xuất tương ứng. Sao chép ID giống như **ChannelID**`},
       )
     if (sgtSet[0] === '?') {
       return message.reply({embeds: [sgtHelp]})
@@ -47,19 +62,15 @@ exports.callback = async (client, message, args) => {
     if (!sgtChannel) return message.reply({
         embeds: (funcE.cmdError(message, 'Chưa setup channel gửi đề xuất!', 'Hãy liên hệ với ban quản trị để được hỗ trợ và hướng dẫn'))
       })
-    
-    if (message.member.permissions.has("ADMINISTRATOR")) {
-      if (sgtSet[0] === 'ok') { //Suggest Accept
-          message.delete();
-          rpChannel.send(`\`${cfg.successemoji} | Đề xuất đã được chấp nhận!\``);
+    if (message.member.permissions.has("ADMINISTRATOR")) {      
+      if (sgtSet[0] === 'ok' && sgtSet[1]) { //Suggest Accept
+          replySuggest(message, sgtSet[1],`\`${cfg.successemoji} | Đề xuất đã được chấp nhận!\``);
           return;
-      } else if (sgtSet[0] === 'deny') { //Suggest Deny
-          message.delete();
-          rpChannel.send(`\`🚫 | Đề xuất không được chấp nhận!\``);
+      } else if (sgtSet[0] === 'deny' && sgtSet[1]) { //Suggest Deny
+          replySuggest(message, sgtSet[1],`\`🚫 | Đề xuất không được chấp nhận!\``);
           return;
       }
-    }    
-    //Check Suggest Content
+    }
     if (!args.join(' ')) {
       return message.reply({
         embeds: (funcE.cmdError(message, 'Nội dung đề xuất không thể bỏ trống!', `\`${cfg.prefix}${exports.name} nội dung đề xuất\``))
@@ -68,9 +79,9 @@ exports.callback = async (client, message, args) => {
       const user = message.author
       const em = new MessageEmbed()
         .setAuthor({ name: `Đề xuất của ${user.tag}`, iconURL: user.displayAvatarURL(true) })
-        //.setTitle('')
-        .setDescription("Đề xuất sẽ được xem xét và trả lời sớm nhất!")
-        .addField('Nội dung:', args.join(' '))
+        .setTitle('Nội dung:')
+        .setDescription(args.join(' '))
+        //.addField('Nội dung:', args.join(' '))
         .setTimestamp()
         .setColor("RANDOM")
         .setThumbnail(thumbnailURL)
@@ -81,6 +92,7 @@ exports.callback = async (client, message, args) => {
       const msgSuggest = await rpChannel.send({ embeds: [em] })
       msgSuggest.react("👍")
       msgSuggest.react("👎")
+      rpChannel.send(`\`❗ | Đề xuất sẽ được xem xét và trả lời sớm nhất!\``)
       await message.channel.send(`${cfg.successemoji} | Đề xuất của **${user.username}** đã được gửi tới channel <#${sgtChannel}> thành công!`)
     }
 

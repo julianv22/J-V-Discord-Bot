@@ -14,13 +14,15 @@ exports.callback = async(client, message, args) => {
       })
     }
     
-    let toSay = args.join(" ")
+    let toSay = args.join(' ')
     if(!toSay) {
       message.delete()
       return message.channel.send(`${cfg.SayEmoji} | Hãy nói gì đó...`)    
     }
     message.channel.send(toSay)  
     message.delete()
+  
+  throw Error
   } catch (error) {
     console.error(error);
   }

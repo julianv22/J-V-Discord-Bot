@@ -17,7 +17,7 @@ exports.callback = async(client, message, args) => {
     
     const user = message.author
     const cmdSize = client.commands.size 
-    const joinCmd = client.commands.map(command => command.name).join(" | ")
+    const joinCmd = client.commands.map(command => command.name).join(' | ')
     const cmds = client.commands.map(command => {
       return {
         name: command.name,
@@ -34,9 +34,11 @@ exports.callback = async(client, message, args) => {
       .setThumbnail(cfg.helpPNG)         
       .addFields(cmds)      
       .addField(`Command prefix: ${cfg.prefix}`, `${joinCmd}`)
-      .setFooter(`${cfg.prefix}[tên command] ? để xem hướng dẫn chi tiết của command.`, message.guild.iconURL(true))
+      .setFooter(`${cfg.prefix}[tên command] ? để xem hướng dẫn chi tiết của command.`, client.user.displayAvatarURL(true))
     message.channel.send({embeds: [embed]})
     message.delete()
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

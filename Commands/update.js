@@ -3,6 +3,7 @@ const db = new Database()
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
 const func = require("../Functions/cmdHelp")
+const funcE = require("../Functions/cmdError")
 const thumbnailURL = "https://blognhansu.net.vn/wp-content/uploads/2017/01/update-tai-lieu.jpg"
 
 exports.name = "update"
@@ -41,13 +42,15 @@ exports.callback = async (client, message, args) => {
       }
     }
     
-    if (!updateChannel) return message.reply(`${cfg.erroremoji} | Chưa set channel thông báo!`)
-    
+    if (!updateChannel) return message.reply({
+        embeds: (funcE.cmdError(message, 'Chưa setup channel thông báo!', `\`${cfg.prefix}${exports.name} set [ID channel]\` để setup`))
+      })
     //Check Suggest Content
-    const emArgs = args.join(' ').split('|')
+    const emArgs = args.join(' ').split(' | ')
     if (!emArgs[0] || !emArgs[1]) {
-      return message.reply(`${cfg.erroremoji} | Nội dung thông báo không thể bỏ trống!
-\`${cfg.prefix}${exports.name} Tiêu đề | Nội dung\``)
+      return message.reply({
+        embeds: (funcE.cmdError(message, 'Nội dung thông báo không thể bỏ trống!', `\`${cfg.prefix}${exports.name} Tiêu đề thông báo | Nội dung thông báo\``))
+      })
     } else { //Create Embed Message
       const user = message.author
       const em = new MessageEmbed()
@@ -64,6 +67,8 @@ exports.callback = async (client, message, args) => {
       rpChannel.send({ embeds: [em] })      
       //console.log(`${cfg.successemoji} | Thông báo đã được gửi thành công!`)
     }
+  
+  throw Error
   } catch (error) {
     console.error(error);
   }

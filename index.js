@@ -48,7 +48,7 @@ client.on("messageCreate", async (message) => {
       // Check command
       if (!command) {
         return message.reply({
-          embeds: (func.cmdError(message, `Command \`${cfg.prefix}${cmdName}\` chưa chính xác hoặc không tồn tại!`))
+          embeds: (func.cmdError(message, 'Không tìm thấy command',`\`${cfg.prefix}${cmdName}\` chưa chính xác hoặc không tồn tại!`))
         })
       }
       command.callback(client, message, args);

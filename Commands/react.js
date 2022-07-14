@@ -26,6 +26,8 @@ exports.callback = async (client, message, args) => {
     const msg = `${raMsg[Math.floor(Math.random() * raMsg.length)]}`
     const msgReact = await message.channel.send(msg)
     msgReact.react("😎")
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

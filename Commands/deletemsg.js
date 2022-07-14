@@ -1,3 +1,6 @@
+
+
+
 const { Permissions } = require('discord.js');
 const cfg = require('../config.json')
 const func = require("../Functions/cmdHelp")
@@ -21,7 +24,7 @@ exports.callback = async (client, message, args) => {
     const user = message.member
     if (user.permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
       if (!args[0] || isNaN(args[0])) return message.reply(`${cfg.erroremoji} | Hãy nhập số lượng tin nhắn muốn xoá`)
-      if (args[0] < 1 || args[0] > 100) return message.reply(`${cfg.erroremoji} | Số lượng tin nhắn trong từ 1 > 100`)
+      if (args[0] < 1 || args[0] > 100) return message.reply(`${cfg.erroremoji} | Số lượng tin nhắn trong khoảng từ 1 > 100`)
       message.delete()
       await message.channel.messages.fetch({ limit: args[0] }).then(messages => {         message.channel.bulkDelete(messages)              
       })            
@@ -29,6 +32,9 @@ exports.callback = async (client, message, args) => {
     } else {
       return message.reply(`${cfg.erroremoji} | Bạn không phải Admin để sử dụng command này!`)
     }
+
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

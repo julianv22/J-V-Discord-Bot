@@ -19,15 +19,17 @@ exports.callback = async(client, message, args) => {
     funcQ.getQuote().then(quote => {
       const user = message.author
       const embed = new MessageEmbed()      
-        .setAuthor(user.username, user.displayAvatarURL(true))
+        .setAuthor(message.guild.name, message.guild.iconURL(true))
         .setDescription(quote)
         .setColor(cfg.embedcolor)        
         .setThumbnail(cfg.thumbnailURL)
-        .setFooter('Source: ZenQuotes')
+        .setFooter(`Requested by ${user.username}`, user.displayAvatarURL(true))
         .setTimestamp()        
       message.delete()
       message.channel.send({embeds: [embed]})
     })
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

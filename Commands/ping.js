@@ -14,10 +14,11 @@ exports.callback = async(client, message, args) => {
       })
     }
     
-    let x = args.join(" ")
-    if(x) {return}
-    message.reply(`⏱ | **${message.author.username}** ping: \`${client.ws.ping} ms\`
-**Bots** ping: ${Math.round(bot.ws.ping)}`) 
+    let x = args.join(' ')
+    if(x) return
+    message.reply(`⏱ | **${message.author.username}** ping: \`${client.ws.ping} ms\``) 
+
+  throw Error
   } catch (error) {
     console.error(error);
   }

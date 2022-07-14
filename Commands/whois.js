@@ -60,6 +60,8 @@ exports.callback = (client, message, args) => {
       .setFooter(`Requested by ${message.member.user.tag}`, `${message.member.displayAvatarURL(true)}`)
       .setTimestamp()
     message.reply({embeds: [embed]})  
+  
+  throw Error
   } catch (error) {
     console.error(error);
   }

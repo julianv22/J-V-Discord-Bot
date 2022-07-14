@@ -1,3 +1,4 @@
+
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
 const func = require("../Functions/cmdHelp")
@@ -45,6 +46,8 @@ exports.callback = async(client, message, args) => {
      .setFooter(`👀`) 
     message.channel.send({embeds: [embed]})
     message.delete()
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

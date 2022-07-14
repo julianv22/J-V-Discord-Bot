@@ -23,6 +23,8 @@ exports.callback = async(client, message, args) => {
       .setImage("https://thumbs.gfycat.com/FavoriteBasicBadger-max-1mb.gif")    
     message.channel.send({embeds: [embed]})
     message.delete()
+  
+  throw Error
   } catch (error) {
     console.error(error);
   }

@@ -34,6 +34,8 @@ exports.callback = async(client, message, args) => {
         text: `Requested by ${message.author.username}`,
         iconURL: message.author.displayAvatarURL(true)});      
     message.reply({ embeds: [avtEmbed] });
+  
+  throw Error
   } catch (err) {
     console.error(err);
     message.reply(`${cfg.erroremoji} | Error: \`\`\`${err}\`\`\``);

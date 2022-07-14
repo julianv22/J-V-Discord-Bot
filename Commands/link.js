@@ -24,8 +24,12 @@ exports.callback = async(client, message, args) => {
       .addField("Server hỗ trợ", `[${cfg.serverName} Server](${cfg.discordLink})`,true)
       .addField("Link mời",`[Invite me (recommended)](${cfg.inviteLink})\n\n[Invite me (admin)](https://shorturl.ae/WnzIo)`,true)    
       .addField("Chủ sở hữu",`[Discord](${cfg.ownerServerLink})\n\n[YouTube](https://www.youtube.com/Julian-V)`,true)
-      .setImage(imgURL)    
-    message.reply({embeds: [embed]})  
+      .setImage(imgURL)
+      .setFooter(`${client.user.username} is working in [${client.guilds.cache.size.toLocaleString()}] servers`, client.user.displayAvatarURL(true))
+      .setTimestamp()
+    message.reply({embeds: [embed]}) 
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

@@ -4,8 +4,8 @@ function cmdHelp(message, stname, stussage) {
   try {    
     let res = [{
         author: {
-          name: message.author.username,
-          icon_url: message.author.displayAvatarURL(true)
+          name: message.guild.name, 
+          icon_url: message.guild.iconURL(true)
         },
         thumbnail: {url: cfg.helpPNG},
         title: `Huớng dẫn sử dụng command [${stname}]`,

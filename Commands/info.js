@@ -20,7 +20,7 @@ exports.callback = async(client, message, args) => {
       })
     }
     
-    const msg = args.join(" ")  
+    const msg = args.join(' ')  
   if (!msg) {
     let guild = message.guild  
     let members = guild.memberCount
@@ -97,11 +97,13 @@ exports.callback = async(client, message, args) => {
             member.roles.cache
               .filter((r) => r.id !== message.guild.id)
               .map((roles) => `<@&${roles.id}>`)
-              .join(" ") || "No Roles"
+              .join(' ') || "No Roles"
           }`)      
         .setThumbnail(member.displayAvatarURL(true))
       message.reply({ embeds: [embed] })
     }  
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

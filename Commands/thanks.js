@@ -49,6 +49,8 @@ exports.callback = async(client, message, args) => {
       .setImage(`${imgURL[Math.floor(Math.random() * imgURL.length)]}`)                
     message.reply({embeds: [embed]})    
     await db.set(`thanksCount_${message.guild.id}_${member.id}`, thanksCount + 1)
+  
+  throw Error
   } catch (error) {
     console.error(error);
   }

@@ -23,7 +23,7 @@ exports.callback = async(client, message, args) => {
   		message.mentions.members.first() ||
   		message.guild.members.cache.get(args[0]);
     if(!target) {
-      return message.reply(`${cfg.erroremoji} | Phải @ đến nạn nhân để hack ${cfg.FunEmoji}!`)}
+      return message.reply(`${cfg.erroremoji} | Phải @ đến nạn nhân để hack 🤣!`)}
     if (target.id === message.author.id) {
       return message.reply(`${cfg.erroremoji} | Ngu dốt! Không thể hack chính mình 😅!`)}
     if (target.id === message.guild.ownerId) {
@@ -82,6 +82,8 @@ exports.callback = async(client, message, args) => {
   		await setTimeout(() => {
   			msg.edit(result);
   		}, 6000);	
+    
+  throw Error
   } catch (error) {
     console.error(error);
   }

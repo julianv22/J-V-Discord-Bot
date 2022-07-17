@@ -14,7 +14,7 @@ exports.callback = async (client, message, args) => {
       })
     }
 
-    let raMsg = [
+    let stReact = [
       "Cool!",
       "Greet!",
       "Perfect!",
@@ -23,12 +23,12 @@ exports.callback = async (client, message, args) => {
       "Holy!"
     ]
     message.delete()
-    const msg = `${raMsg[Math.floor(Math.random() * raMsg.length)]}`
-    const msgReact = await message.channel.send(msg)
-    msgReact.react("😎")
+    const msg = `${stReact[Math.floor(Math.random() * stReact.length)]}`
+    const msgReact = await message.channel.send(msg)      
+    await msgReact.react("😎")      
     
   throw Error
   } catch (error) {
     console.error(error);
   }
-} 
+}

@@ -58,9 +58,19 @@ client.on("messageCreate", async (message) => {
   }
 })
 //---------------------BOT Stats---------------------
-client.on("ready", () => {
+client.on("ready", async() => {  
+  const activities = [
+    { type: 'PLAYING',  message: `${cfg.prefix}${cfg.status}`  },
+    { type: 'WATCHING', message: `${cfg.prefix}${cfg.status}` },
+    { type: 'LISTENING', message: `${cfg.prefix}${cfg.status}` },
+    { type: 'STREAMING', message: `${cfg.prefix}${cfg.status}`}
+  ];
   console.log("Client has Logged on!");
-  client.user.setActivity(`${cfg.status}`, { type: `${cfg.statustype}` });
+  setInterval(() => {
+    const index = Math.floor(Math.random() * activities.length);    
+    client.user.setActivity(activities[index].message, {type: activities[index].type});
+  }, 1000*60*5);
+  //client.user.setActivity(`${cfg.status}`, { type: `${cfg.statustype[Math.floor(Math.random() * cfg.statustype.length)]}` });
   console.log(`${cfg.name} is online. Prefix = ${cfg.prefix}`);
   console.log(`Working in ${client.guilds.cache.size.toLocaleString()} Servers`)
   console.log(`Status = ${cfg.prefix}${cfg.status}`);

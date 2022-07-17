@@ -39,24 +39,28 @@ exports.callback = (client, message, args) => {
         })
       .setThumbnail(user.displayAvatarURL(true))            
       .addFields(
-        {name: "Ngày tham gia server", value: `${moment(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true},
-        {name: "Ngày tạo tài khoản", value: `${moment(message.author.createdAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true},    
+        {
+          name: "Ngày tham gia server",
+          value: `${moment(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true
+        },
+        {
+          name: "Ngày tạo tài khoản",
+          value: `${moment(message.author.createdAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true
+        },    
         {name: "User ID", value: `${user.id}`, inline: true}
       )
       .addField("Chức danh", `${acknowledgements}`, true)
       .addField(
-          `Vai trò [${
-            member.roles.cache
-              .filter((r) => r.id !== message.guild.id)
-              .map((roles) => `\`${roles.name}\``).length
-          }]`,
-          `${
-            member.roles.cache
-              .filter((r) => r.id !== message.guild.id)
-              .map((roles) => `<@&${roles.id}>`)
-              .join(" ") || "No Roles"
-          }`        
-        )
+        `Vai trò [${member.roles.cache
+            .filter((r) => r.id !== message.guild.id)
+            .map((roles) => `\`${roles.name}\``).length
+                  }]`,
+        `${member.roles.cache
+            .filter((r) => r.id !== message.guild.id)
+            .map((roles) => `<@&${roles.id}>`)
+            .join(" ") || "No Roles"
+         }`
+      )
       .setFooter(`Requested by ${message.member.user.tag}`, `${message.member.displayAvatarURL(true)}`)
       .setTimestamp()
     message.reply({embeds: [embed]})  

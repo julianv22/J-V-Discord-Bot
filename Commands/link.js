@@ -16,18 +16,30 @@ exports.callback = async(client, message, args) => {
     }
     
     const user = message.author
-    const imgURL = "https://cdn-longterm.mee6.xyz/plugins/welcome/images/954736697453731850/2d36f223df925d1c99ef0d477e3c8925df5a454bec3312f1ecbfd411474d9c5b.png"
+    const imgURL = "https://media.discordapp.net/attachments/976364997066231828/997976998527914124/Header.png"
     const embed = new MessageEmbed()
       .setAuthor(user.username,user.displayAvatarURL(true))
       .setTitle("Dưới dây là các liên kết bạn có thể cần")
       .setColor(cfg.embedcolor)
       .addField("Server hỗ trợ", `[${cfg.serverName} Server](${cfg.discordLink})`,true)
-      .addField("Link mời",`[Invite me (recommended)](${cfg.inviteLink})\n\n[Invite me (admin)](https://shorturl.ae/WnzIo)`,true)    
-      .addField("Chủ sở hữu",`[Discord](${cfg.ownerServerLink})\n\n[YouTube](https://www.youtube.com/Julian-V)`,true)
+      .addField(
+        "Link mời",
+        `[Invite me (recommended)](${cfg.inviteLink})\n\n[Invite me (admin)](https://shorturl.ae/WnzIo)`,true
+      )    
+      .addField(
+        "Chủ sở hữu",
+        `[YouTube](https://www.youtube.com/Julian-V)`,true
+      )
       .setImage(imgURL)
-      .setFooter(`${client.user.username} is working in [${client.guilds.cache.size.toLocaleString()}] servers`, client.user.displayAvatarURL(true))
+      .setFooter(
+        `${client.user.username} is working in [${client.guilds.cache.size.toLocaleString()}] servers`,
+        client.user.displayAvatarURL(true)
+      )
       .setTimestamp()
-    message.reply({embeds: [embed]}) 
+    message.reply({embeds: [embed]})
+      .then((msg) => {
+        msg.edit(`Owner Discord: ${cfg.ownerServerLink}`)
+      })
     
   throw Error
   } catch (error) {

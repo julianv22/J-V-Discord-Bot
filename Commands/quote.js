@@ -1,7 +1,6 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const funcQ = require("../Functions/getQuote")
-const funcH = require("../Functions/cmdHelp")
+const func = [require("../Functions/cmdHelp"), require("../Functions/getQuote")]
 
 exports.name = "quote"
 exports.aliases = ["qt"]
@@ -12,11 +11,11 @@ exports.callback = async(client, message, args) => {
   try { 
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: (funcH.cmdHelp(message, exports.name, exports.ussage))
+        embeds: (func[0].cmdHelp(message, exports.name, exports.ussage))
       })
     }
     
-    funcQ.getQuote().then(quote => {
+    func[1].getQuote().then(quote => {
       const user = message.author
       const embed = new MessageEmbed()      
         .setAuthor(message.guild.name, message.guild.iconURL(true))

@@ -14,13 +14,13 @@ exports.ussage = `**Xem thông tin server:**
 
 exports.callback = async(client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') {
+    const msg = args.join(' ')
+    if (msg.trim() === '?') {
       return message.reply({
         embeds: (func.cmdHelp(message, exports.name, exports.ussage))
       })
     }
-    
-    const msg = args.join(' ')  
+      
   if (!msg) {
     let guild = message.guild  
     let members = guild.memberCount
@@ -30,78 +30,69 @@ exports.callback = async(client, message, args) => {
     var embed = new MessageEmbed()
       .setAuthor(message.guild.name, message.guild.iconURL(true))    
       .setTitle("Server Info")
-      .addField("Server Name", `${guild.name}`,true)
-      .addField("Server ID", `${guild.id}`,true)
-      .addField("Server Owner", `${guild.ownerID}`,true)
-      .addField("Total Members", `${members} Members\n${bots} Bots`,true)    
-      .addField("Total Roles", `${guild.roles.cache.size}`,true)
-      .addField("Total Channels", ` ${channels} Text
-  ${voices} Voice`,true)    
-      .addField("Server Region", `${guild.region}`,true)
-      .addField("Verification Level", `${guild.verificationLevel}`,true)
-      .addField("Created in", `${guild.createdAt.toLocaleString()}`,true)
-      .addField("Total Boosts", `${guild.premiumSubscriptionCount}`,true)
       .setColor(cfg.embedcolor)
       .setFooter(`Requested by ${message.member.user.tag}`, `${message.member.displayAvatarURL(true)}`)
       .setTimestamp()
       .setThumbnail(guild.iconURL(true))
+      .addFields(
+        {name: 'Server Name', value: `${guild.name}`, inline: true},
+        {name: 'Server ID', value: `${guild.id}`, inline: true},
+        {name: 'Server Owner', value: `${guild.ownerID}`, inline: true},
+        {name: 'Total Members', value: `${members} Members\n${bots} Bots`, inline: true},
+        {name: 'Total Roles', value: `${guild.roles.cache.size}`, inline: true},
+        {name: 'Total Channels', value: `${channels} Text\n${voices} Voice`, inline: true},
+        {name: 'Server Region', value: `${guild.region}`, inline: true},
+        {name: 'Verification Level', value: `${guild.verificationLevel}`, inline: true},
+        {name: '"Created in', value: `${guild.createdAt.toLocaleString()}`, inline: true},
+        {name: 'Total Boosts', value: `${guild.premiumSubscriptionCount}`, inline: true},        
+      )            
   message.reply({embeds: [embed]}) 
-  } else if(!message.mentions.members.first()) {
-        return message.reply(`${cfg.erroremoji} | Bạn phải @ đến một thành viên!`)}
-    else {  
-      var permissions = [];
-      var acknowledgements = "";
-      const member =
-          message.mentions.members.first() || message.member || message.guild.members.cache.get(args[0]) 
-      if (member.id == message.guild.ownerId) {acknowledgements = "Server Owner"}
-      if (member.premiumSince) {
-        // If there was an acknowledgement, add a comma
-        if (acknowledgements.length > 0) {acknowledgements += ", Server Booster"
-        } else {acknowledgements = "Server Booster"}
-      }
-      // If no acknowledgement, set it to None
-      if (!acknowledgements) {acknowledgements = "None"}
-      
-      const embed = new MessageEmbed()
-        .setTitle("Member Info")
-        .setDescription(`**Name:** ${member}`)
-        .setAuthor({
-          name: member.user.tag,
-          iconURL: member.displayAvatarURL(true),
-        })
-        .setColor(cfg.embedcolor)
-        .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL(true))
-        .setThumbnail(member.displayAvatarURL(true))
-        .setTimestamp()      
-        .addField(
-          "Joined at: ",
-          `${moment(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`,
-          true
-        )
-        .addField(
-          "Created at: ",
-          `${moment(message.author.createdAt).format(
-            "dddd, MMMM Do YYYY, HH:mm"
-          )}`,
-          true
-        )
-        .addField("User ID", `${member.user.id}`, true)
-        .addField("Acknowledgements", `${acknowledgements}`, true)      
-        .addField(
-          `Roles [${
-            member.roles.cache
-              .filter((r) => r.id !== message.guild.id)
-              .map((roles) => `\`${roles.name}\``).length
-          }]`,
-          `${
-            member.roles.cache
-              .filter((r) => r.id !== message.guild.id)
-              .map((roles) => `<@&${roles.id}>`)
-              .join(' ') || "No Roles"
-          }`)      
-        .setThumbnail(member.displayAvatarURL(true))
-      message.reply({ embeds: [embed] })
-    }  
+  } else {
+    if(!message.mentions.members.first()) return message.reply(`${cfg.erroremoji} | Bạn phải @ đến một thành viên!`)
+    
+    var permissions = [];
+    var acknowledgements = "";
+    const member = message.mentions.members.first() || message.member || message.guild.members.cache.get(args[0]) 
+    if (member.id === message.guild.ownerId) acknowledgements = "Server Owner";
+    if (member.premiumSince) {
+      // If there was an acknowledgement, add a comma
+      if (acknowledgements.length > 0) {acknowledgements += ", Server Booster"} 
+      else {acknowledgements = "Server Booster"}
+    }
+    // If no acknowledgement, set it to None
+    if (!acknowledgements) {acknowledgements = "None"}
+    
+    const embed = new MessageEmbed()
+      .setTitle("Member Info")
+      .setDescription(`**Name:** ${member}`)
+      .setAuthor({
+        name: member.user.tag,
+        iconURL: member.displayAvatarURL(true),
+      })
+      .setColor(cfg.embedcolor)
+      .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL(true))
+      .setThumbnail(member.displayAvatarURL(true))
+      .setTimestamp()
+      .setThumbnail(member.displayAvatarURL(true))
+      .addFields(
+        {name: 'Joined at:', value: `${moment(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true},
+        {name: 'Created at:', value: `${moment(message.author.createdAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true},
+        {name: 'User ID', value: `${member.user.id}`, inline: true},
+        {name: 'Acknowledgements', value: `${acknowledgements}`, inline: true},
+        {
+          name: `Roles [${member.roles.cache
+                          .filter((r) => r.id !== message.guild.id)
+                          .map((roles) => `\`${roles.name}\``).length
+                        }]`,
+          value: `${member.roles.cache
+                    .filter((r) => r.id !== message.guild.id)
+                    .map((roles) => `<@&${roles.id}>`)
+                    .join(' ') || "No Roles"
+                  }`
+        },
+      )          
+    message.reply({ embeds: [embed] })
+  }  
     
   throw Error
   } catch (error) {

@@ -1,5 +1,5 @@
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const funcH = require("../Functions/cmdHelp")
 
 exports.name = "ping"
 //exports.aliases = [""]
@@ -10,7 +10,7 @@ exports.callback = async(client, message, args) => {
   try {
     if (args.join(' ').trim() === '?') {
       return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
+        embeds: (funcH.cmdHelp(message, exports.name, exports.ussage))
       })
     }
     

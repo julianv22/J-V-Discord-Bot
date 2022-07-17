@@ -34,7 +34,10 @@ exports.callback = async(client, message, args) => {
       .setThumbnail(cfg.helpPNG)         
       .addFields(cmds)      
       .addField(`Command prefix: ${cfg.prefix}`, `${joinCmd}`)
-      .setFooter(`${cfg.prefix}[tên command] ? để xem hướng dẫn chi tiết của command.`, client.user.displayAvatarURL(true))
+      .setFooter(
+        `${cfg.prefix}[tên command] ? để xem hướng dẫn chi tiết của command.`,
+        client.user.displayAvatarURL(true)
+      )
     message.channel.send({embeds: [embed]})
     message.delete()
     

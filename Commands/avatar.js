@@ -38,17 +38,6 @@ exports.callback = async(client, message, args) => {
   throw Error
   } catch (err) {
     console.error(err);
-    message.reply(`${cfg.erroremoji} | Error: \`\`\`${err}\`\`\``);
-  }  
-
-
-    function newFunction(exports) {
-        return message.reply({
-            embeds: func.helpEmbed(exports.name, exports.ussage)
-        })
-    }
-}
-
-function newFunction_1(newFunction, exports) {
-    return newFunction(exports)
+    //message.reply(`${cfg.erroremoji} | Error: \`\`\`${err}\`\`\``);
+  }   
 }

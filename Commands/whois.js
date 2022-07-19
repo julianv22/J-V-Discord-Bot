@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const moment = require("moment")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 
 exports.name = "whois"
 //exports.aliases = [""]
@@ -10,11 +10,7 @@ exports.ussage = `Xem thông tin của thành viên (vi): \n\`${cfg.prefix}${exp
 
 exports.callback = (client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') {
-      return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    }
+    if (args.join(' ').trim() === '?') return cmdHelp(message, exports.name, exports.ussage)
     
     let user = message.mentions.users.first() || message.author
     let member = message.mentions.members.first()
@@ -39,28 +35,24 @@ exports.callback = (client, message, args) => {
         })
       .setThumbnail(user.displayAvatarURL(true))            
       .addFields(
-        {
-          name: "Ngày tham gia server",
-          value: `${moment(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true
-        },
-        {
-          name: "Ngày tạo tài khoản",
-          value: `${moment(message.author.createdAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true
-        },    
+        {name: "Ngày tham gia server", value: `${moment(member.joinedAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true},
+        {name: "Ngày tạo tài khoản", value: `${moment(message.author.createdAt).format("dddd, MMMM Do YYYY, HH:mm")}`, inline: true},    
         {name: "User ID", value: `${user.id}`, inline: true}
       )
       .addField("Chức danh", `${acknowledgements}`, true)
       .addField(
-        `Vai trò [${member.roles.cache
-            .filter((r) => r.id !== message.guild.id)
-            .map((roles) => `\`${roles.name}\``).length
-                  }]`,
-        `${member.roles.cache
-            .filter((r) => r.id !== message.guild.id)
-            .map((roles) => `<@&${roles.id}>`)
-            .join(" ") || "No Roles"
-         }`
-      )
+          `Vai trò [${
+            member.roles.cache
+              .filter((r) => r.id !== message.guild.id)
+              .map((roles) => `\`${roles.name}\``).length
+          }]`,
+          `${
+            member.roles.cache
+              .filter((r) => r.id !== message.guild.id)
+              .map((roles) => `<@&${roles.id}>`)
+              .join(" ") || "No Roles"
+          }`        
+        )
       .setFooter(`Requested by ${message.member.user.tag}`, `${message.member.displayAvatarURL(true)}`)
       .setTimestamp()
     message.reply({embeds: [embed]})  

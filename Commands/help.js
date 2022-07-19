@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 
 exports.name = "help"
 exports.aliases = ["h"]
@@ -11,10 +11,8 @@ ${exports.description}`
                     
 exports.callback = async(client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    
+    if (args.join(' ').trim() === '?') return cmdHelp(message, exports.name, exports.ussage)
+      
     const user = message.author
     const cmdSize = client.commands.size 
     const joinCmd = client.commands.map(command => command.name).join(' | ')

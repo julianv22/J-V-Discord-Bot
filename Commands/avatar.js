@@ -1,23 +1,17 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 
 
 exports.name = "avatar"
 exports.aliases = ["avt"]
 exports.description = `⤷Xem avatar của một người nào đó.\nAlias: \`${exports.aliases}\``
 exports.ussage = `**Để xem avatar của một người nào đó dùng command:**
-\`${cfg.prefix}${exports.name} @tên thành viên\`
-*(nếu bỏ trống phần tên thì sẽ hiển thị avatar của chính mình)*`
+\`${cfg.prefix}${exports.name} @tên thành viên\``
 
 exports.callback = async(client, message, args) => {
   try {   
-    if (args.join(' ').trim() === '?') {
-      return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    }
-    
+    if (args.join(' ').trim() === '?') return cmdHelp(message, exports.name, exports.ussage, 'Nếu bỏ trống phần tên thì sẽ hiển thị avatar của chính mình')
     const user =
       message.mentions.users.first() ||
       message.guild.members.cache.get(args[0]) ||

@@ -2,7 +2,7 @@ const Database = require("@replit/database")
 const db = new Database()
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 
 exports.name = "thanks"
 exports.aliases = ["ty"]
@@ -11,11 +11,7 @@ exports.ussage = `Gửi lời cảm ơn tới ai đó: \n\`${cfg.prefix}${export
 
 exports.callback = async(client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') {
-      return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    }
+    if (args.join(' ').trim() === '?') return cmdHelp(message, exports.name, exports.ussage)
     
     let imgURL = [
       "https://cdn.discordapp.com/attachments/976364997066231828/987822146279587850/unknown.png",

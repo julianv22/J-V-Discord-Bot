@@ -2,18 +2,16 @@ const Database = require("@replit/database")
 const db = new Database()
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdError")
+const cmdError = require("../Functions/cmdError")
 const thumbnailURL = "https://media.discordapp.net/attachments/976364997066231828/995628740782596127/unknown.png"
 
 async function replySuggest(message, msgID, stReply) {    
   let msg = await message.channel.messages.fetch(msgID).catch(() => undefined);
-  if (msg === undefined) return message.reply({
-      embeds: (func.cmdError(
+  if (msg === undefined) return cmdError(
         message,
         'Lỗi Message ID',
         'Message ID không chính xác!'
-      ))
-    })
+      )
   if (msg.author.id != cfg.botID) return message.reply(`${cfg.erroremoji} | Hình như sai ID rồi đó man!`)
   return await msg.edit(stReply).then(() => message.delete())
 }
@@ -72,20 +70,16 @@ exports.callback = async (client, message, args) => {
       }
       return
     }
-    if (!sgtChannel) return message.reply({
-        embeds: (func.cmdError(
+    if (!sgtChannel) return cmdError(
           message,
           'Chưa setup channel gửi đề xuất!',
           'Hãy liên hệ với ban quản trị để được hỗ trợ và hướng dẫn'
-        ))
-    })
-    if (rpChannel === undefined) return message.reply({
-        embeds: (func.cmdError(
+        )
+    if (rpChannel === undefined) return cmdError(
           message,
           'Channel gửi đề xuất không tồn tại hoặc đã bị thay đổi!',
           'Hãy liên hệ với ban quản trị để được hỗ trợ và hướng dẫn'
-        ))
-    })
+        )
     if (isAdmin) { //Check Permission
       if (sgtSet[0] === 'ok' && sgtSet[1]) { //Suggest Accept
           return replySuggest(message, sgtSet[1],`\`${cfg.successemoji} | Đề xuất đã được chấp nhận!\``);
@@ -93,14 +87,12 @@ exports.callback = async (client, message, args) => {
           return replySuggest(message, sgtSet[1],`\`🚫 | Đề xuất không được chấp nhận!\``);
       }
     }
-    if (!args.join(' ')) { //Check Suggest Content
-      return message.reply({
-        embeds: (func.cmdError(
+    if (!args.join(' ')) {
+      return cmdError(
           message,
           'Nội dung đề xuất không thể bỏ trống!',
           `\`${cfg.prefix}${exports.name} nội dung đề xuất\``
-        ))
-      })
+        )    
     } else { //Create Embed Message
       const user = message.author
       const em = new MessageEmbed()

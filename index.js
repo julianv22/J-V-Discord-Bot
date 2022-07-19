@@ -1,7 +1,7 @@
 const expr = require("express");
 const DC = require("discord.js");
 const cfg = require('./config.json')
-const func = require("./Functions/cmdError")
+const cmdError = require("./Functions/cmdError")
 const app = expr();
 
 app.listen(3000, () => {
@@ -39,18 +39,20 @@ client.on("messageCreate", async (message) => {
     });
     // Check bot permission
     const botPermission = "SEND_MESSAGES" && "MANAGE_MESSAGES" && "EMBED_LINKS" && "ADD_REACTIONS"
+    const isAdmin = message.member.permissions.has("ADMINISTRATOR")
     if (!message.channel.permissionsFor(cfg.botID).toArray().includes(botPermission)) { return console.log("\n\n-----------Bot CANT send message!!-----------\n\n") }
     // Check message prefix 
     if (message.content.startsWith(cfg.prefix)) {
       const args = message.content.slice(cfg.prefix.length).split(/ +/);
       const cmdName = args.shift().toLowerCase()
       const command = client.commands.get(cmdName) || client.commands.find(a => a.aliases && a.aliases.includes(cmdName));
-      // Check command
-      if (!command) {
-        return message.reply({
-          embeds: (func.cmdError(message, 'Không tìm thấy command',`\`${cfg.prefix}${cmdName}\` chưa chính xác hoặc không tồn tại!`))
-        })
-      }
+      
+      if (!command) return cmdError( // Check command
+        message, 
+        'Không tìm thấy command',
+        `\`${cfg.prefix}${cmdName}\` chưa chính xác hoặc không tồn tại!`
+      )
+      
       command.callback(client, message, args);
     }
   } catch (error) {

@@ -1,6 +1,10 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = [require("../Functions/checkURL"), require("../Functions/cmdError")]
+const [createEmbed, cmdError, f] = [  
+  require("../Functions/createEmbed"),
+  require("../Functions/cmdError"),
+  require("../Functions/genEmbed")
+]
 
 exports.name = "embed"
 exports.aliases = ["em"]
@@ -28,42 +32,19 @@ exports.callback = async (client, message, args) => {
         {name: 'ThumbnailURL' , value: 'Ảnh thumbnail góc bên phải embed *(nếu không set có thể bỏ trống)*'},
         {name: 'ImageURL' , value: 'Chèn ảnh vào cuối embed *(nếu không set có thể bỏ trống)*'},
       )
+    .setFooter('Super Embed: Field 1 ^ Value 1 # Field 2 ^ Value 2 # Field 3 ^ Value 3... ')
     
-    let emContent = args.join(' ').split(' | ')
-    if (emContent[0] === '?') return message.reply({ embeds: [emHelp] }) //Embed's Help 
+    let embed = args.join(' ').split(' | ')
+    if (embed[0] === '?') return message.reply({ embeds: [emHelp] }) //Embed's Help 
     
-    if (!emContent[0] || !emContent[1]) return message.reply({
-      embeds: (func[1].cmdError(
-        message,
-        'Command chưa chính xác!', 
-        `\`${cfg.prefix}${exports.name} Tiêu đề | Nội dung\`
+    if (!embed[0] || !embed[1]) return cmdError(
+      message,
+      'Command chưa chính xác!', 
+      `\`${cfg.prefix}${exports.name} Tiêu đề | Nội dung\`
 \n\`${cfg.prefix}${exports.name} ?\` để xem hướng dẫn cụ thể`
-      ))
-    })
-    
-    const embed = new MessageEmbed()
-      .setAuthor(user.username, user.displayAvatarURL(true))
-      .setTitle(emContent[0])
-      .setDescription(emContent[1])
-      .setColor(cfg.embedcolor)
-      .setTimestamp()
-    if (emContent[2]) {
-      embed.setFooter({
-        text: emContent[2],
-        iconURL: message.guild.iconURL(true)
-      })
-    }
-    if (func[0].checkURL(emContent[3])) {
-      try {
-        embed.setThumbnail(emContent[3])
-      } catch (err) {console.error(err)}
-    }
-    if (func[0].checkURL(emContent[4])) {
-      try {
-        embed.setImage(emContent[4])
-      } catch (err) {console.error(err)}
-    }
-    message.channel.send({ embeds: [embed] })
+    )    
+    //createEmbed(message, embed)
+    message.channel.send({embeds: f.genEmbed(message, embed)})
     message.delete()     
     
   throw Error

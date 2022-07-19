@@ -1,20 +1,15 @@
 const cfg = require('../config.json')
+const { MessageEmbed } = require("discord.js")
 
-function cmdHelp(message, stname, stussage) {  
+module.exports = async(message, cmdName, cmdUssage, stFooter) => {  
   try {    
-    let res = [{
-        author: {
-          name: message.guild.name, 
-          icon_url: message.guild.iconURL(true)
-        },
-        thumbnail: {url: cfg.helpPNG},
-        title: `Huớng dẫn sử dụng command [${stname}]`,
-        description: stussage,          
-        color: 'RANDOM',          
-      }]       
-    return res    
-  } catch (err) {
-    console.error(err)
-  }
+    const embHelp = new MessageEmbed()
+      .setAuthor(message.guild.name,  message.guild.iconURL(true))
+      .setThumbnail(cfg.helpPNG)
+      .setTitle(`Huớng dẫn sử dụng command [${cmdName}]`)
+      .setDescription(cmdUssage)
+      .setColor(cfg.embedcolor)
+      if (stFooter) embHelp.setFooter(stFooter)
+    message.reply({embeds: [embHelp]})
+  } catch (err) {console.error(err)}
 }
-module.exports = {cmdHelp}

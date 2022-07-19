@@ -1,5 +1,5 @@
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 const devs = [
 	"816253376962625537", // @GoodBoyNeon
 	"820502577783373884", // @Nandhu
@@ -9,15 +9,11 @@ const devs = [
 exports.name = "hack"
 //exports.aliases = [""]
 exports.description = `⤷Hack ai đó - J4F 😝`
-exports.ussage = `J4F 😝 \n\`${cfg.prefix}${exports.name} @tên thành viên\``
+exports.ussage = `\`${cfg.prefix}${exports.name} @tên thành viên\``
 
 exports.callback = async(client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') {
-      return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    }
+    if (args.join(' ').trim() === '?') return cmdHelp(message, exports.name, exports.ussage, 'J4F 😝')
     
     const target =
   		message.mentions.members.first() ||

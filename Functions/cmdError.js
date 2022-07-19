@@ -1,24 +1,14 @@
 const cfg = require('../config.json')
+const { MessageEmbed } = require("discord.js")
 
-function cmdError(message, stError, stHelp) {  
-  try {    
-    let res = [{
-        author: {
-          name: message.guild.name, 
-          icon_url: message.guild.iconURL(true)
-        },        
-        title: "Error:",
-        fields: [{
-          name: stError,
-          value: stHelp,
-          inline: false
-        }],
-        thumbnail: {url: cfg.errorPNG},
-        color: 'RED',          
-      }]       
-    return res    
-  } catch (err) {
-    console.error(err)
-  }
+module.exports = async(message, stError, stHelp) => {  
+  try {
+    const embErr = new MessageEmbed()
+      .setAuthor(message.guild.name, message.guild.iconURL(true))
+      .setTitle('Error:')
+      .setThumbnail(cfg.errorPNG)
+      .setColor('RED')
+      .addField(stError, stHelp)
+    message.reply({embeds: [embErr]})
+  } catch (err) {console.error(err)}
 }
-module.exports = {cmdError}

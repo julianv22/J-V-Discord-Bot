@@ -1,7 +1,7 @@
 const { MessageEmbed } = require("discord.js")
 const moment = require("moment")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 
 exports.name = "info"
 exports.aliases = ["serverinfo", "inf"]
@@ -15,11 +15,7 @@ exports.ussage = `**Xem thông tin server:**
 exports.callback = async(client, message, args) => {
   try {
     const msg = args.join(' ')
-    if (msg.trim() === '?') {
-      return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    }
+    if (msg.trim() === '?') return cmdHelp(message, exports.name, exports.ussage)
       
   if (!msg) {
     let guild = message.guild  

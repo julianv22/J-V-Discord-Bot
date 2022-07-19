@@ -1,6 +1,6 @@
 const { MessageEmbed } = require("discord.js")
 const cfg = require('../config.json')
-const func = require("../Functions/cmdHelp")
+const cmdHelp = require("../Functions/cmdHelp")
 
 exports.name = "kiss"
 //exports.aliases = [""]
@@ -10,11 +10,7 @@ exports.ussage = `**Trao hụ hôn thắm thiết cho người bạn thương �
 
 exports.callback = async(client, message, args) => {
   try {
-    if (args.join(' ').trim() === '?') {
-      return message.reply({
-        embeds: (func.cmdHelp(message, exports.name, exports.ussage))
-      })
-    }
+    if (args.join(' ').trim() === '?') return cmdHelp(message, exports.name, exports.ussage)
     
     let user = message.mentions.members.first()
     if(!user) {

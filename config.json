@@ -22,7 +22,10 @@
   "embedcolor": "RANDOM",
   "inviteLink": "https://shorturl.at/jnsV0",
   "discordLink": "https://discord.gg/dyd8DXbrVq",
+  "youtube": "https://www.youtube.com/Julian-V",
   "thumbnailURL":"https://media.discordapp.net/attachments/976364997066231828/997961687091130388/0._Yusei_5.png",
   "helpPNG": "https://www.pngall.com/wp-content/uploads/5/Help.png",
-  "errorPNG": "https://png2.cleanpng.com/sh/0f8e00c86f2f1f1797d0086459ccec90/L0KzQYi4UsAzN2FmSpGAYUK1RIbphMc1PpYASpC9MUS2QoK7WME2OWM2UacAMUe3R4eCTwBvbz==/5a2245bd746e92.4143214815121955174769.png"
+  "errorPNG": "https://png2.cleanpng.com/sh/0f8e00c86f2f1f1797d0086459ccec90/L0KzQYi4UsAzN2FmSpGAYUK1RIbphMc1PpYASpC9MUS2QoK7WME2OWM2UacAMUe3R4eCTwBvbz==/5a2245bd746e92.4143214815121955174769.png",
+  "Bots_Name": "🎭〔J-V Bot〕",  
+  "instal_node": "npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH"
 }

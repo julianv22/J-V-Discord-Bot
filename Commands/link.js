@@ -25,7 +25,7 @@ exports.callback = async(client, message, args) => {
             `${client.user.username} is working in [${client.guilds.cache.size.toLocaleString()}] servers`,
             message.guild.iconURL(true),
             imgURL,
-            `Server hỗ trợ ^ [${cfg.serverName} Server](${cfg.discordLink}) # Link mời ^ [Invite me (recommended)](${cfg.inviteLink})\n\n[Invite me (admin)](https://shorturl.ae/WnzIo) # Chủ sở hữu ^ [YouTube](https://www.youtube.com/Julian-V)`
+            `Server hỗ trợ ^ [${cfg.serverName} Server](${cfg.discordLink}) # Link mời ^ [Invite me (recommended)](${cfg.inviteLink})\n\n[Invite me (admin)](https://shorturl.ae/WnzIo) # Chủ sở hữu ^ [YouTube](${cfg.youtube})`
           ])
       })
     })

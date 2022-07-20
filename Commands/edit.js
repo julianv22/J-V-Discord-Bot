@@ -109,6 +109,7 @@ exports.callback = async (client, message, args) => {
     
     let msgID = await message.channel.messages.fetch(stEdit[0]).catch(() => undefined);
     const user = message.author
+    let editContent 
     switch(stEdit[0]) {
       case 'embed':        
         msgID = await message.channel.messages.fetch(stEdit[1]).catch(() => undefined);
@@ -132,14 +133,15 @@ exports.callback = async (client, message, args) => {
         )          
           
         const stEmbed = args.slice(2).join(' ').split(' | ')
+        editContent = cfg.prefix + exports.name + ' ' + args.join(' ')
         await msgID.edit({embeds: f.genEmbed(message, stEmbed)})
           .then(() => { 
-            editReport(message, user.tag, msgID.id, msgID.url, rpEditChannel)
+            editReport(message, user.tag, msgID.id, msgID.url, rpEditChannel, editContent)
           })
         message.delete()
         break;      
       default:
-        const stContent = args.slice(1).join(' ')
+        editContent = args.slice(1).join(' ')
         //Check Message ID
         if (msgID === undefined || !stEdit[0]) return cmdError(
           message,
@@ -153,14 +155,15 @@ exports.callback = async (client, message, args) => {
           `${cfg.erroremoji} | Message ID: [\`${stEdit[0]}\`](${msgID.url}) không phải tin nhắn của <@${client.user.id}>`
         )
         // Check Content
-        if (!stContent) return cmdError(
+        if (!editContent) return cmdError(
           message, 
           'Lỗi Edit Message', 
           `Chưa nhập nội dung edit!\n\`${cfg.prefix}${exports.name} [Message ID] [Nội dung edit]\``
-        )                
-        await msgID.edit(stContent)
+        )
+        
+        await msgID.edit(editContent)
           .then(() => {
-            editReport(message, user.tag, msgID.id, msgID.url, rpEditChannel, 1, stContent, )
+            editReport(message, user.tag, msgID.id, msgID.url, rpEditChannel, editContent)
           })
         message.delete()
       } //End Switch

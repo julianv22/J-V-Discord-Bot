@@ -1,23 +1,39 @@
 const expr = require("express");
+const app = expr();
+const fs = require("fs");
 const DC = require("discord.js");
+const FLAG =  DC.Intents.FLAGS
 const cfg = require('./config.json')
 const cmdError = require("./Functions/cmdError")
-const app = expr();
+
 
 app.listen(3000, () => {
   console.log("Project is running!");
 })
 
-const fs = require("fs");
 let client = new DC.Client({
   intents: [
-    "GUILDS",
-    "GUILD_MESSAGES"
+    FLAG.GUILDS,
+    FLAG.GUILD_MESSAGES,
+    FLAG.GUILD_MESSAGE_REACTIONS,
+    //FLAG.GUILD_MESSAGE_TYPING,    
+    FLAG.GUILD_MEMBERS,
+    FLAG.GUILD_INVITES,
+    FLAG.GUILD_VOICE_STATES,
+    //FLAG.GUILD_PRESENCES,    
+    //FLAG.GUILD_INTEGRATIONS,
+    //FLAG.GUILD_WEBHOOKS,    
+    //FLAG.GUILD_BANS,
+    //FLAG.GUILD_EMOJIS_AND_STICKERS,    
+    //FLAG.DIRECT_MESSAGES,
+    //FLAG.DIRECT_MESSAGE_TYPING,
+    //FLAG.DIRECT_MESSAGE_REACTIONS,
   ],
   partials: [
     "MESSAGE", "CHANNEL", "REACTION"
   ]
 });
+
 client.commands = new DC.Collection();
 
 const cmd_files = fs.readdirSync("./Commands").filter(file => file.endsWith(".js"));
@@ -39,15 +55,16 @@ client.on("messageCreate", async (message) => {
     });
     // Check bot permission
     const botPermission = "SEND_MESSAGES" && "MANAGE_MESSAGES" && "EMBED_LINKS" && "ADD_REACTIONS"
-    const isAdmin = message.member.permissions.has("ADMINISTRATOR")
-    if (!message.channel.permissionsFor(cfg.botID).toArray().includes(botPermission)) { return console.log("\n\n-----------Bot CANT send message!!-----------\n\n") }
+    //const isAdmin = message.member.permissions.has("ADMINISTRATOR")
+    if (!message.channel.permissionsFor(cfg.botID).toArray().includes(botPermission)) 
+      return console.log("\n\n-----------Bot CANT send message!!-----------\n\n") 
     // Check message prefix 
     if (message.content.startsWith(cfg.prefix)) {
       const args = message.content.slice(cfg.prefix.length).split(/ +/);
       const cmdName = args.shift().toLowerCase()
       const command = client.commands.get(cmdName) || client.commands.find(a => a.aliases && a.aliases.includes(cmdName));
-      
-      if (!command) return cmdError( // Check command
+      // Check command
+      if (!command) return cmdError(
         message, 
         'Không tìm thấy command',
         `\`${cfg.prefix}${cmdName}\` chưa chính xác hoặc không tồn tại!`
@@ -61,21 +78,25 @@ client.on("messageCreate", async (message) => {
 })
 //---------------------BOT Stats---------------------
 client.on("ready", async() => {  
-  const activities = [
-    { type: 'PLAYING',  message: `${cfg.prefix}${cfg.status}`  },
-    { type: 'WATCHING', message: `${cfg.prefix}${cfg.status}` },
-    { type: 'LISTENING', message: `${cfg.prefix}${cfg.status}` },
-    { type: 'STREAMING', message: `${cfg.prefix}${cfg.status}`}
-  ];
+  /*const activities = [ 
+    { message: stStatust, type: 'PLAYING', url: cfg.youtube },
+    { message: stStatust, type: 'WATCHING', url: cfg.youtube },
+    { message: stStatust, type: 'LISTENING', url: cfg.youtube },
+    { message: stStatust, type: 'STREAMING', url: cfg.youtube }
+  ];*/
+  const stStatust = cfg.prefix + cfg.status
   console.log("Client has Logged on!");
-  setInterval(() => {
-    const index = Math.floor(Math.random() * activities.length);    
-    client.user.setActivity(activities[index].message, {type: activities[index].type});
+  setInterval(() => { // Set Activity
+    const index = Math.floor(Math.random() * cfg.statustype.length);    
+    client.user.setActivity(stStatust, {
+      type: cfg.statustype[index], 
+      url: cfg.youtube
+    });
   }, 1000*60*5);
-  //client.user.setActivity(`${cfg.status}`, { type: `${cfg.statustype[Math.floor(Math.random() * cfg.statustype.length)]}` });
+  
   console.log(`${cfg.name} is online. Prefix = ${cfg.prefix}`);
   console.log(`Working in ${client.guilds.cache.size.toLocaleString()} Servers`)
-  console.log(`Status = ${cfg.prefix}${cfg.status}`);
+  console.log(`Status = ${stStatust}`);
   console.log(`Status type = ${cfg.statustype}`);
   console.log(`Mod emoji = ${cfg.ModEmoji}`);
   console.log(`Owner emoji = ${cfg.OwnerEmoji}`);  
@@ -95,4 +116,8 @@ client.on("ready", async() => {
 app.get("/", (req, res) => {
   res.send(cfg.expresstext);
 })
-client.login(process.env.token)
+client.login(process.env.token).catch((e) => {
+  console.log(e);
+  process.disconnect();
+  process.destroy();
+})

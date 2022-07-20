@@ -22,12 +22,12 @@ function genEmbed(message, args) {
       title: args[0], // Set Tittle
       description: args[1], // Set Description
       color: cfg.embedcolor, // Set Color
-      timestamp: new Date(), // Set Timestamp
-      footer: { // Set Footer
-        text: args[2] || message.guild.name,
+      timestamp: new Date(), // Set Timestamp      
+    }]
+      if (args[2]) res[0].footer = { // Set Footer
+        text: args[2],
         icon_url: message.guild.iconURL(true),
       }
-    }]       
       if (f.checkURL(args[3])) res[0].thumbnail = { // Set Thumbnail
         url: args[3]
       }

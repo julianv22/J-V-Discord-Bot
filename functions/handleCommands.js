@@ -41,7 +41,7 @@ module.exports = (client) => {
         console.log('\nSuccessfully reloaded application (/) commands.\n');
       })();
     } catch (e) {
-      console.log;
+      console.log(e);
     }
   }
 }
